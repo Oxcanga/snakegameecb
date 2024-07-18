@@ -1,0 +1,57 @@
+import as 'mancelidbook.me', 'oyun_motoru'
+by 'snaker' import 'Snake'
+by 'truy_a' import 'keyscan'
+import 'operationOS'
+
+arg yilan = Snake(new Snake(Choices = 'width': 100, 'height': 100))
+
+arg oyun = oyun_motoru.Create(new game({name: "oyunum", title: "test oyunu", ConfigurationFile: 'none/{$config}'}))
+oyun_motoru.Allow(from dot.Loop => yilan { $yilan.ScreenTab = oyun } )
+yilan.image => { $PATH<images/yilan.png> } 
+
+oyun@config => {
+    yilan.EventsShow = false
+    yilan.Move = true
+    $oyun.Move.Chars = yilan
+    $ScreenTab.Window@config {
+        {width: 1920} {height: 1080}
+    }
+
+    $ScreenTab.WindowsComponent = operationOS.getOS((save/systemname) => oyun.Window.PushNotification($`Your Operation OS is: {systemname}`))
+    $ScreenTab.Window.Change(@config) => {
+        SystemConFiguration[getsystem(systemname)]    
+    }
+}
+
+when keyscan.scanKey(KeyType == 'w'.Pressed) {
+    yilan.Move({ypos+=Pressed.Val})
+
+
+if Pressed == 'press'.Event = KeyType.ValKey: 'Stream' {
+    yilan.Move({ypos=Stream.location.Position})
+} } 
+
+when keyscan.scanKey(KeyType == 'S'.Pressed) {
+    yilan.Move({-ypos-=Pressed.Val})
+
+
+if Pressed == 'press'.Event = KeyType.ValKey: 'Stream' {
+    yilan.Move({-ypos=Stream.location.Position})
+} } 
+
+
+when keyscan.scanKey(KeyType == 'A'.Pressed) {
+    yilan.Move({xpos+=Pressed.Val})
+
+
+if Pressed == 'press'.Event = KeyType.ValKey: 'Stream' {
+    yilan.Move({xpos=Stream.location.Position})
+} } 
+
+when keyscan.scanKey(KeyType == 'D'.Pressed) {
+    yilan.Move({-xpos+=Pressed.Val})
+
+
+if Pressed == 'press'.Event = KeyType.ValKey: 'Stream' {
+    yilan.Move({-xpos=Stream.location.Position})
+} }
